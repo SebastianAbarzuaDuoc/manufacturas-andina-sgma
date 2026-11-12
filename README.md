@@ -1,15 +1,41 @@
-# Sistema de Gestión y Mantención de Activos Industriales
+# Sistema de Gestión y Mantención de Activos Industriales (SGMA)
 **Empresa:** Manufacturas Andina S.A.  
-**Sprint 1:** Hito 1 - Avance Inicial  
+**Entrega:** Cierre Sprint 1 (Hito 2)  
 
-## 📌 Descripción del Proyecto
-Sistema para la centralización y control del mantenimiento industrial de la planta Manufacturas Andina S.A. Permite registrar activos, controlar su estado operacional y generar órdenes de trabajo por fallas.
+## 📌 Funcionalidades del Sprint 1 Terminadas
+- **Gestión Centralizada de Activos (CRUD):** Registro de equipos industriales con código único, tipo y ubicación en planta.
+- **Emisión de Órdenes de Trabajo (OT):** Reporte de fallas correctivas y mantenciones preventivas con cambio automático del estado del equipo.
+- **Historial y Cierre Técnico:** Seguimiento de fallas históricas, registro de diagnóstico técnico y cierre de órdenes que devuelven la maquinaria a estado operativo.
 
-## 🚀 Funcionalidades Entregadas
-- Base de Datos relacional en SQLite (Tablas de activos y órdenes de trabajo).
-- Interfaz gráfica ejecutable en Python (Tkinter).
-- Formulario de registro de nuevas maquinarias.
-- Módulo de reporte de fallas y solicitudes de mantención.
+## 🗄️ Diseño de Base de Datos (Modelo Relacional)
 
-## 🛠️ Requisitos e Instrucciones
-1. Ejecutar en consola: `python app.py`
+```mermaid
+erDiagram
+    ROLES ||--o{ USUARIOS : tiene
+    ACTIVOS ||--o{ ORDENES : registra
+    ORDENES ||--o{ ORDEN_REPUESTOS : consume
+    REPUESTOS ||--o{ ORDEN_REPUESTOS : utilizado_en
+
+    ACTIVOS {
+        int id PK
+        string codigo UK
+        string nombre
+        string tipo
+        string ubicacion
+        string estado
+    }
+    ORDENES {
+        int id PK
+        string codigo_activo FK
+        string tipo
+        string descripcion
+        datetime fecha_reporte
+        string diagnostico
+        string estado
+    }
+    REPUESTOS {
+        int id_repuesto PK
+        string codigo_bodega UK
+        string nombre_repuesto
+        int stock_actual
+    }
